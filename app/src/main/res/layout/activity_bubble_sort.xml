@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginBottom="100dp"
+
+android:gravity="bottom|center"
+android:orientation="horizontal"
+tools:context=".SortAlgActivity">
+
+
+
+<ImageView
+    android:id="@+id/number1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number5"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number7"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number8"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number9"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+<ImageView
+    android:id="@+id/number10"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@color/special"
+    app:srcCompat="@drawable/number" />
+
+
+
+</LinearLayout>
