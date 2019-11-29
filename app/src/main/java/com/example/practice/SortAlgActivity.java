@@ -333,11 +333,9 @@ public class SortAlgActivity extends AppCompatActivity {
     {
         int n = arr.length;
 
-        // Build heap (rearrange array)
         for (int i = n / 2 - 1; i >= 0; i--)
             heapify(arr, n, i);
 
-        // One by one extract an element from heap
         for (int b=n-1; b>=0; b--)
         {
             final int i=b;
@@ -354,10 +352,7 @@ public class SortAlgActivity extends AppCompatActivity {
                 image[i].getLayoutParams().height=image[0].getLayoutParams().height;
                 Log.i("value", String.valueOf(image[0].getLayoutParams().height));
                 image[0].getLayoutParams().height=height;
-
-                // call max heapify on the reduced heap
                 heapify(arr, i, 0);
-                // Move current root to end
             }
         },(n-b)*1000);
 
