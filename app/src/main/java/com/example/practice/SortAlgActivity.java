@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,12 +16,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Stack;
+
 public class SortAlgActivity extends AppCompatActivity {
     ImageView number1,number2,number3,number4,number5,number6,number7,number8,number9,number10;
     int[] data={520,870,1020,410,1190,321,665,989,432,1000};
     View[] image;
     Handler handler;
     Handler inhandler;
+    final Handler handler2=new Handler();
     String algo;
 
     @Override
@@ -88,32 +92,41 @@ public class SortAlgActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if (arr[j] > arr[j + 1]) {
+                                    setColor(j,false);
+                                    setColor(j+1,false);
                                     // swap temp and arr[i]
                                     int temp = arr[j];
                                     arr[j] = arr[j + 1];
                                     arr[j + 1] = temp;
-                                    image[j].requestLayout();
-                                    int height=image[j].getLayoutParams().height;
-                                    image[j+1].requestLayout();
-                                    image[j].getLayoutParams().height=image[j+1].getLayoutParams().height;
-                                    image[j+1].getLayoutParams().height=height;
+                                    swapImg(j,j+1);
+
+
 
                                 }
 
                             }
                         },500*j);
                     }
+
+                    handler2.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i=0;i<image.length;i++)
+                            {
+                                setColor(i,true);
+                            }
+                        }
+                    },500);
+
                 }
 
-            }, 1000*i);
+            }, 2000*i);
         }
     }
 
     void selectionSort(final int[] arr)
     {
-
             final int n = arr.length;
-            final ViewGroup viewGroup = (ViewGroup) number4.getParent();
             // One by one move boundary of unsorted subarray
             for ( int b = 0; b < n-1; b++)
             {
@@ -123,8 +136,8 @@ public class SortAlgActivity extends AppCompatActivity {
                     public void run() {
 
                         int min_idx = i;
-                        for (int f = i+1; f < n; f++) {
-                            int j=f;
+                        for (int j = i+1; j < n; j++) {
+
 
                             if (arr[j] < arr[min_idx])
                                 min_idx = j;
@@ -134,114 +147,71 @@ public class SortAlgActivity extends AppCompatActivity {
                         // element
                         if(i!=min_idx)
                         {
-                            int c=i;
-                            viewGroup.removeView(image[i]);
-                            c+=1;
-                            while(c<min_idx)
-                            {
-                                viewGroup.removeView(image[c]);
-                                c+=1;
-                            }
-                            c+=1;
-                            while (c<n)
-                            {
-                                viewGroup.removeView(image[c]);
-                                c+=1;
-                            }
-                            c=i+1;
-                            while(c<min_idx)
-                            {
-                                viewGroup.addView(image[c]);
-                                c+=1;
-                            }
-                            viewGroup.addView(image[i]);
-                            c+=1;
-                            while (c<n)
-                            {
-                                viewGroup.addView(image[c]);
-                                c+=1;
-                            }
-                            View view=image[i];
-                            image[i]=image[min_idx];
-                            image[min_idx]=view;
-
-
-
+                            swapImg(i,min_idx);
                             int temp = arr[min_idx];
                             arr[min_idx] = arr[i];
                             arr[i] = temp;
                         }
+                        setColor(i,false);
 
-                        for(int k=0;k<n;k++)
+                        if(i==n-2)
                         {
-                            String data= String.valueOf(k);
-                            Log.i("num"+k, String.valueOf(arr[k]));
-                        }
+                            setColor(i+1,false);
+                            inhandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for(int i=0;i<image.length;i++)
+                                    {
+                                        setColor(i,true);
+                                    }
+                                }
+                            },500);
 
+                        }
 
                     }
                 },1000*i);
                 // Find the minimum element in unsorted array
-
             }
-
-
     }
     void InsertionSort(final int[] arr)
     {
         final int n = arr.length;
-        final ViewGroup viewGroup = (ViewGroup) number4.getParent();
+        setColor(0,false);
         for (int b = 1; b < n; ++b) {
             final int i=b;
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     int key = arr[i];
-                    View keyImg=image[i];
                     int j = i - 1;
+                    setColor(i,false);
 
             /* Move elements of arr[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
                     while (j >= 0 && arr[j] > key) {
-                        int idx=j+1;
-                        while(idx<n)
-                        {
-                            viewGroup.removeView(image[idx]);
-                            idx+=1;
-                        }
-                        idx=j+1;
-                        image[j+1]=image[j];
-                        while(idx<n)
-                        {
-                            if(viewGroup!=null)
-                            {
-                                viewGroup.removeView(image[idx]);
-                            }
-                            viewGroup.addView(image[idx]);
-                            idx+=1;
-                        }
+                        swapImg(j,j+1);
                         arr[j + 1] = arr[j];
 
                         j = j - 1;
 
                     }
                     arr[j + 1] = key;
-                    int idx=j+1;
-                    while(idx<n)
-                    {
-                        viewGroup.removeView(image[idx]);
-                        idx+=1;
-                    }
-                    image[j+1]=keyImg;
-                    idx=j+1;
-                    while(idx<n)
-                    {
-                        viewGroup.addView(image[idx]);
-                        idx+=1;
-                    }
 
+                    if(i==n-1)
+                    {
+                        inhandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i=0;i<image.length;i++)
+                                {
+                                    setColor(i,true);
+                                }
+                            }
+                        },500);
 
+                    }
                 }
             },1000*i);
 
@@ -253,81 +223,6 @@ public class SortAlgActivity extends AppCompatActivity {
         }
 
     }
-
-
-        void merge(int arr[], int l, int m, int r)
-        {
-            // Find sizes of two subarrays to be merged
-            int n1 = m - l + 1;
-            int n2 = r - m;
-
-            /* Create temp arrays */
-            int L[] = new int [n1];
-            int R[] = new int [n2];
-
-            /*Copy data to temp arrays*/
-            for (int i=0; i<n1; ++i)
-                L[i] = arr[l + i];
-            for (int j=0; j<n2; ++j)
-                R[j] = arr[m + 1+ j];
-
-
-            /* Merge the temp arrays */
-
-            // Initial indexes of first and second subarrays
-            int i = 0, j = 0;
-
-            // Initial index of merged subarry array
-            int k = l;
-            while (i < n1 && j < n2)
-            {
-                if (L[i] <= R[j])
-                {
-                    arr[k] = L[i];
-                    i++;
-                }
-                else
-                {
-                    arr[k] = R[j];
-                    j++;
-                }
-                k++;
-            }
-
-            /* Copy remaining elements of L[] if any */
-            while (i < n1)
-            {
-                arr[k] = L[i];
-                i++;
-                k++;
-            }
-
-            /* Copy remaining elements of R[] if any */
-            while (j < n2)
-            {
-                arr[k] = R[j];
-                j++;
-                k++;
-            }
-        }
-
-        // Main function that sorts arr[l..r] using
-        // merge()
-        void Mergesort(int arr[], int l, int r)
-        {
-            if (l < r)
-            {
-                // Find the middle point
-                int m = (l+r)/2;
-
-                // Sort first and second halves
-                Mergesort(arr, l, m);
-                Mergesort(arr ,m+1, r);
-
-                // Merge the sorted halves
-                merge(arr, l, m, r);
-            }
-        }
 
     public void heapSort(final int[] arr)
     {
@@ -345,18 +240,29 @@ public class SortAlgActivity extends AppCompatActivity {
                 int temp = arr[0];
                 arr[0] = arr[i];
                 arr[i] = temp;
-                image[i].requestLayout();
-                int height=image[i].getLayoutParams().height;
-                Log.i("value", String.valueOf(height));
-                image[0].requestLayout();
-                image[i].getLayoutParams().height=image[0].getLayoutParams().height;
-                Log.i("value", String.valueOf(image[0].getLayoutParams().height));
-                image[0].getLayoutParams().height=height;
+                swapImg(i,0);
+                setColor(i,false);
                 heapify(arr, i, 0);
-            }
-        },(n-b)*1000);
+                if(i==0)
+                {
+                    inhandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i=0;i<image.length;i++)
+                            {
+                                setColor(i,true);
+                            }
+                        }
+                    },500);
 
-        }}
+                }
+            }
+
+            },(n-b)*1000);
+
+        }
+
+    }
 
     void heapify(int[] arr, int n, int i)
     {
@@ -378,21 +284,203 @@ public class SortAlgActivity extends AppCompatActivity {
             int swap = arr[i];
             arr[i] = arr[largest];
             arr[largest] = swap;
-            image[i].requestLayout();
-            int height=image[i].getLayoutParams().height;
-            image[largest].requestLayout();
-            image[i].getLayoutParams().height=image[largest].getLayoutParams().height;
-            image[largest].getLayoutParams().height=height;
+            swapImg(i,largest);
 
             // Recursively heapify the affected sub-tree
             heapify(arr, n, largest);
         }
     }
 
-    void quickSort()
+
+
+
+    void quickSort(final int[] arr, int high)
     {
+        final Stack<Integer> stackl=new Stack<Integer>();
+        final Stack<Integer> stackh=new Stack<Integer>();
+        stackl.push(0);
+        stackh.push(high);
+        final int[] pivot = new int[1];
+        final int[] i = new int[1];
+        final int[] k=new int[1];
+        final int[] currentLow = new int[1];
+        final int[] currentHigh = new int[1];
+
+        for(int p=1;p<15;p++)
+        {
+            final int d=p;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(!stackl.empty())
+                    {
+                        Log.i("iteration", String.valueOf(d));
+                        currentLow[0] =stackl.pop();
+                        currentHigh[0] =stackh.pop();
+                        k[0] =d;
+                        if(currentLow[0] < currentHigh[0] && currentLow[0] >=0 && currentHigh[0] <arr.length)
+                        {
+                            pivot[0] = arr[currentHigh[0]];
+                            setColor(currentHigh[0],false);
+                            i[0] = currentLow[0] -1; // index of smaller element
+                            for (int b = currentLow[0]; b<= currentHigh[0]; b++)
+                            {
+
+                                final int j=b;
+                                handler2.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(j== currentHigh[0])
+                                        {
+                                            int temp = arr[i[0] +1];
+                                            arr[i[0] +1] = arr[currentHigh[0]];
+                                            arr[currentHigh[0]] = temp;
+                                            setColor(i[0]+1,false);
+                                            setColor(currentHigh[0],true);
+                                            stackl.push(i[0] +2);
+                                            stackh.push(currentHigh[0]);
+                                            stackl.push(currentLow[0]);
+                                            stackh.push(i[0]);
+                                            swapImg(i[0] +1, currentHigh[0]);
+                                        }
+                                        else if (arr[j] < pivot[0])
+                                        {
+                                            i[0] +=1;
+
+                                            // swap arr[i] and arr[j]
+                                            int temp = arr[i[0]];
+                                            arr[i[0]] = arr[j];
+                                            arr[j] = temp;
+                                            swapImg(i[0],j);
+                                        }
+                                    }
+                                },100*j);
+
+
+                            }
+                        }
+
+                    }else
+                    {
+                        Log.i("After iteration", String.valueOf(d));
+                    }
+
+                    if(d==14)
+                    {
+                        inhandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int i=0;i<image.length;i++)
+                                {
+                                    setColor(i,true);
+                                }
+                            }
+                        },500);
+
+                    }
+
+                }
+            },1000*p);
+
+        }
+
+
+
+
+
+
 
     }
+
+
+
+
+
+
+
+    void mergeSort(int[] array) {
+        if (array.length>1)
+        {
+            int[] auxArray=new int[array.length];
+            for (int i=0;i<array.length;i++)
+            {
+                auxArray[i]=array[i];
+            }
+            sortHelper(0,array.length-1,array,auxArray);
+        }
+
+    }
+
+    void sortHelper(int left,int right,int[] array,int[] auxArray)
+    {
+        if (left<right)
+        {
+            int mIndex=(left+right)/2;
+            sortHelper(left,mIndex,auxArray,array);
+            sortHelper(mIndex+1,right,auxArray,array);
+            merge(left,mIndex,right,array,auxArray);
+        }
+    }
+
+    void merge(int left,int mIndex,int right,int[] array,int[] auxArray) {
+        int i = left, j = mIndex + 1, idx = left;
+        while (i <= mIndex && j <= right) {
+            if (auxArray[i] <= auxArray[j]) {
+                array[idx] = auxArray[i];
+                assignImg(idx,auxArray[i]);
+                i += 1;
+            } else {
+                array[idx] = auxArray[j];
+                assignImg(idx,auxArray[j]);
+                j += 1;
+            }
+            idx += 1;
+        }
+        while (i <= mIndex && idx <= right) {
+            array[idx] = auxArray[i];
+            assignImg(idx,auxArray[i]);
+            i += 1;
+            idx += 1;
+        }
+        while (j <= right && idx <= right) {
+            array[idx] = auxArray[j];
+            assignImg(idx,auxArray[j]);
+            j += 1;
+            idx += 1;
+        }
+    }
+
+        void swapImg(int i,int j)
+    {
+        image[i].requestLayout();
+        int height=image[i].getLayoutParams().height;
+        image[j].requestLayout();
+        image[i].getLayoutParams().height=image[j].getLayoutParams().height;
+        image[j].getLayoutParams().height=height;
+    }
+
+    void assignImg(int i,int j)
+    {
+        image[i].requestLayout();
+        image[i].getLayoutParams().height=j;
+    }
+
+    void setColor(int i,boolean time)
+    {
+        if(time)
+        {
+            image[i].requestLayout();
+            image[i].setBackgroundColor(getResources().getColor(R.color.special));
+        }
+        else
+        {
+            image[i].requestLayout();
+            image[i].setBackgroundColor(getResources().getColor(R.color.violet));
+        }
+
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -412,15 +500,17 @@ public class SortAlgActivity extends AppCompatActivity {
             }
             else if(algo.equals("Merge Sort"))
             {
-                Mergesort(data,0,data.length-1);
+                mergeSort(data);
             }
             else if(algo.equals("Heap Sort"))
             {
                 heapSort(data);
+
             }
             else if(algo.equals("Quick Sort"))
             {
-                quickSort();
+                //quickSort(data,0,data.length-1);
+                quickSort(data,data.length-1);
             }
             else
             {
