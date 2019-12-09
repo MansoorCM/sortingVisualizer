@@ -6,4 +6,5 @@
     <color name="special">#78c257</color>
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorPrimaryLight">#64b5f6</color>
+    <color name="violet">#9209e4</color>
 </resources>

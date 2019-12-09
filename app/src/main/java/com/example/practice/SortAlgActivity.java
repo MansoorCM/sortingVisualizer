@@ -26,6 +26,10 @@ public class SortAlgActivity extends AppCompatActivity {
     Handler inhandler;
     final Handler handler2=new Handler();
     String algo;
+    public static Stack<Integer> mstackl=new Stack<Integer>();
+    public static Stack<Integer> mstackm=new Stack<Integer>();
+    public static Stack<Integer> mstackr=new Stack<Integer>();
+    public static Stack<Integer> mstackmode=new Stack<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -394,60 +398,156 @@ public class SortAlgActivity extends AppCompatActivity {
 
 
 
+    public void mergeSort(final int[] array) {
 
-
-
-
-    void mergeSort(int[] array) {
         if (array.length>1)
         {
-            int[] auxArray=new int[array.length];
+            final int[] auxArray=new int[array.length];
             for (int i=0;i<array.length;i++)
             {
                 auxArray[i]=array[i];
             }
-            sortHelper(0,array.length-1,array,auxArray);
+            sortHelper(0,array.length-1,array,auxArray,0);
+            for(int g=0;g<9;g++)
+            {
+                final int[] k = {g};
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!mstackl.empty())
+                        {
+                            int left=mstackl.pop();
+                            int mIndex=mstackm.pop();
+                            int right=mstackr.pop();
+                            int mode=mstackmode.pop();
+                            if(mode==0)
+                            {
+                                merge(left,mIndex,right,array,auxArray,k[0]);
+                            }
+                            else
+                            {
+                                merge(left,mIndex,right,auxArray,array,k[0]);
+                            }
+
+                        }
+                        else
+                        {
+                            Log.i("iteration", String.valueOf(k[0]));
+
+                        }
+                    }
+                }, k[0] *1000);
+
+            }
+
+
+
         }
 
     }
 
-    void sortHelper(int left,int right,int[] array,int[] auxArray)
+    public void sortHelper(int left,int right,int[] array,int[] auxArray,int mode)
     {
         if (left<right)
         {
             int mIndex=(left+right)/2;
-            sortHelper(left,mIndex,auxArray,array);
-            sortHelper(mIndex+1,right,auxArray,array);
-            merge(left,mIndex,right,array,auxArray);
+            mstackl.push(left);
+            mstackm.push(mIndex);
+            mstackr.push(right);
+            mstackmode.push(mode);
+            mode=(mode+1)%2;
+            sortHelper(mIndex+1,right,auxArray,array,mode);
+            sortHelper(left,mIndex,auxArray,array,mode);
+
+
         }
     }
 
-    void merge(int left,int mIndex,int right,int[] array,int[] auxArray) {
-        int i = left, j = mIndex + 1, idx = left;
-        while (i <= mIndex && j <= right) {
-            if (auxArray[i] <= auxArray[j]) {
-                array[idx] = auxArray[i];
-                assignImg(idx,auxArray[i]);
-                i += 1;
-            } else {
-                array[idx] = auxArray[j];
-                assignImg(idx,auxArray[j]);
-                j += 1;
+
+
+
+
+
+
+//    void mergeSort(int[] array) {
+//        if (array.length>1)
+//        {
+//            int[] auxArray=new int[array.length];
+//            for (int i=0;i<array.length;i++)
+//            {
+//                auxArray[i]=array[i];
+//            }
+//            sortHelper(0,array.length-1,array,auxArray);
+//        }
+//
+//    }
+//
+//    void sortHelper(int left,int right,int[] array,int[] auxArray)
+//    {
+//        if (left<right)
+//        {
+//            int mIndex=(left+right)/2;
+//            sortHelper(left,mIndex,auxArray,array);
+//            sortHelper(mIndex+1,right,auxArray,array);
+//            merge(left,mIndex,right,array,auxArray);
+//        }
+//    }
+
+    void merge(final int left, final int mIndex, final int right, final int[] array, final int[] auxArray, int g) {
+        final int[] i=new int[1];
+        final int[] j=new int[1];
+        final int[] idx = new int[1];
+        idx[0]=left;
+        //while (i <= mIndex && j <= right)
+        inhandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for(i[0]=left,j[0]=mIndex+1;i[0]<mIndex+1&&j[0]<right+1;i[0]++,j[0]++)
+                {
+                    if (auxArray[i[0]] <= auxArray[j[0]]) {
+                        array[idx[0]] = auxArray[i[0]];
+                        assignImg(idx[0],auxArray[i[0]]);
+                        setColor(idx[0],false);
+                        j[0] -= 1;
+                    } else {
+                        array[idx[0]] = auxArray[j[0]];
+                        assignImg(idx[0],auxArray[j[0]]);
+                        setColor(idx[0],false);
+                        i[0] -= 1;
+                    }
+                    idx[0] += 1;
+                }
+                //while (i <= mIndex && idx <= right)
+                for(;i[0]<mIndex+1 && idx[0]<right+1;i[0]++,idx[0]++)
+                {
+                    array[idx[0]] = auxArray[i[0]];
+                    assignImg(idx[0],auxArray[i[0]]);
+                    setColor(idx[0],false);
+//            i += 1;
+//            idx += 1;
+                }
+                //  while (j <= right && idx <= right)
+                for(;j[0]<right+1 && idx[0]<right+1;j[0]++,idx[0]++)
+                {
+                    array[idx[0]] = auxArray[j[0]];
+                    assignImg(idx[0],auxArray[j[0]]);
+                    setColor(idx[0],false);
+//            j += 1;
+//            idx += 1;
+                }
+
+                handler2.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i=0;i<image.length;i++)
+                        {
+                            setColor(i,true);
+                        }
+                    }
+                },400);
             }
-            idx += 1;
-        }
-        while (i <= mIndex && idx <= right) {
-            array[idx] = auxArray[i];
-            assignImg(idx,auxArray[i]);
-            i += 1;
-            idx += 1;
-        }
-        while (j <= right && idx <= right) {
-            array[idx] = auxArray[j];
-            assignImg(idx,auxArray[j]);
-            j += 1;
-            idx += 1;
-        }
+        },g*500);
+
     }
 
         void swapImg(int i,int j)
