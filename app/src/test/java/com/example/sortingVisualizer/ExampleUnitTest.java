@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.sortingVisualizer;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.sortingVisualizer;
 
 import android.content.Context;
 import android.content.Intent;
