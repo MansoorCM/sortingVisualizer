@@ -35,6 +35,7 @@ public class SortAlgActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bubble_sort);
         Intent intent=getIntent();
         algo=intent.getStringExtra("algo");
+        getSupportActionBar().setTitle(algo);
 
         number1=findViewById(R.id.number1);
         number1.requestLayout();

@@ -58,35 +58,11 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             int mPosition = getLayoutPosition();
 // Use that to access the affected item in mWordList.
             String element = mWordList.get(mPosition);
-// Change the word in the mWordList.
 
-                Context context=view.getContext();
-                Intent intent=new Intent(context, SortAlgActivity.class);
-                if(element.equals("Bubble Sort"))
-                {
-                    intent.putExtra("algo","Bubble Sort");
-                }else if(element.equals("Insertion Sort"))
-                {
-                    intent.putExtra("algo","Insertion Sort");
-                }else if(element.equals("Selection Sort"))
-                {
-                    intent.putExtra("algo","Selection Sort");
-                }else if(element.equals("Quick Sort"))
-                {
-                    intent.putExtra("algo","Quick Sort");
-                }else if(element.equals("Heap Sort"))
-                {
-                    intent.putExtra("algo","Heap Sort");
-                }else if(element.equals("Merge Sort"))
-                {
-                    intent.putExtra("algo","Merge Sort");
-                }
-
-
-                context.startActivity(intent);
-
-
-
+            Context context=view.getContext();
+            Intent intent=new Intent(context, SortAlgActivity.class);
+            intent.putExtra("algo",element);
+            context.startActivity(intent);
 
         }
     }

@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private WordListAdapter mAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 // Give the RecyclerView a default layout manager.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
     }
 
     public void addData()
@@ -40,8 +37,5 @@ public class MainActivity extends AppCompatActivity {
         mWordList.addLast("Quick Sort");
         mWordList.addLast("Heap Sort");
         mWordList.addLast("Merge Sort");
-
     }
-
-
 }

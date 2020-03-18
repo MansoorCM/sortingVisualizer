@@ -7,4 +7,5 @@
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorPrimaryLight">#64b5f6</color>
     <color name="violet">#9209e4</color>
+    <color name="light_grey">#F3F3F3</color>
 </resources>
