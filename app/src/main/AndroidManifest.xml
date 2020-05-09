@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.sortingVisualizer.SortAlgActivity"
-            android:parentActivityName="com.example.sortingVisualizer.MainActivity">
-        </activity>
-        <activity android:name="com.example.sortingVisualizer.MainActivity">
+        <activity android:name=".settings.SettingsActivity"
+            android:parentActivityName=".sortingVisualizer"></activity>
+        <activity
+            android:name=".sortingVisualizer"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

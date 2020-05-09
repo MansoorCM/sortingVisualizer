@@ -8,4 +8,19 @@
     <color name="colorPrimaryLight">#64b5f6</color>
     <color name="violet">#9209e4</color>
     <color name="light_grey">#F3F3F3</color>
+
+    <color name="colorRectangle">#455A64</color>
+    <color name="colorBackground">#FFFFD600</color>
+
+    <color name="lightGreen">#A5D6A7</color>
+    <color name="primaryGreen">#43A047</color>
+    <color name="colorGreen">#338637</color>
+    <color name="darkGreen">#1B5E20</color>
+
+    <color name="grey">#D3D3D3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorPrimaryDarkGrey">#8b8682</color>
+    <color name="red">#830a0a</color>
+    <color name="black">#000000</color>
+    <color name="netflix">#E50914</color>
 </resources>

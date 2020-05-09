@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:key="select_algorithm"
+        android:title="Algorithm"
+        android:entries="@array/Algorithm"
+        android:entryValues="@array/AlgorithmValues"
+        />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="speed"
+        android:title="sorting speed"
+        android:summaryOn="Fast"
+        android:summaryOff="Normal"/>
+    <SeekBarPreference
+        android:title="Array size"
+        android:key="array_size"
+        app:min="5"
+        android:max="60"/>
+</PreferenceScreen>
