@@ -6,41 +6,37 @@ import com.example.sortingVisualizer.sortingVisualizer;
 
 import java.util.ArrayList;
 
-public class QuickSort extends AsyncTask<Void,Void,Void> {
+public class QuickSort extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
-        sort(sortingVisualizer.data,0, sortingVisualizer.data.size()-1);
+        sort(sortingVisualizer.data, 0, sortingVisualizer.data.size() - 1);
 
         return null;
     }
-    int partition(ArrayList<Integer> arr, int low, int high)
-    {
-        int pivot = arr.get(high);
-        int i = (low-1); // index of smaller element
-        for (int j=low; j<high; j++)
-        {
-            // If current element is smaller than the pivot
-            if (arr.get(j) < pivot)
-            {
-                i++;
 
-                // swap arr[i] and arr[j]
-                int temp = arr.get(i);
-                arr.set(i, arr.get(j));
-                arr.set(j, temp);
-                publishProgress();
-                try {
-                    Thread.sleep(sortingVisualizer.speed);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    private int partition(ArrayList<Integer> myArray, int low, int high) {
+        int pivot = myArray.get(high);
+        int firstIdx = (low - 1);
+        for (int secondIdx = low; secondIdx < high; secondIdx++) {
+            if (myArray.get(secondIdx) < pivot) {
+                firstIdx++;
+
+                int temp = myArray.get(firstIdx);
+                myArray.set(firstIdx, myArray.get(secondIdx));
+                myArray.set(secondIdx, temp);
+
+            }
+            publishProgress();
+            try {
+                Thread.sleep(sortingVisualizer.speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 
-        // swap arr[i+1] and arr[high] (or pivot)
-        int temp = arr.get(i + 1);
-        arr.set(i + 1, arr.get(high));
-        arr.set(high, temp);
+        int temp = myArray.get(firstIdx + 1);
+        myArray.set(firstIdx + 1, myArray.get(high));
+        myArray.set(high, temp);
         publishProgress();
         try {
             Thread.sleep(sortingVisualizer.speed);
@@ -48,27 +44,17 @@ public class QuickSort extends AsyncTask<Void,Void,Void> {
             e.printStackTrace();
         }
 
-        return i+1;
+        return firstIdx + 1;
     }
 
 
-    /* The main function that implements QuickSort()
-      arr[] --> Array to be sorted,
-      low  --> Starting index,
-      high  --> Ending index */
-    void sort(ArrayList<Integer> arr, int low, int high)
-    {
-        if (low < high)
-        {
-            /* pi is partitioning index, arr[pi] is
-              now at right place */
-            int pi = partition(arr, low, high);
+    private void sort(ArrayList<Integer> myArray, int low, int high) {
+        if (low < high) {
+            int pivot = partition(myArray, low, high);
             publishProgress();
 
-            // Recursively sort elements before
-            // partition and after partition
-            sort(arr, low, pi-1);
-            sort(arr, pi+1, high);
+            sort(myArray, low, pivot - 1);
+            sort(myArray, pivot + 1, high);
         }
     }
 
@@ -81,7 +67,7 @@ public class QuickSort extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        sortingVisualizer.sorted=true;
+        sortingVisualizer.sorted = true;
         sortingVisualizer.drawSomething(sortingVisualizer.mImageView);
         sortingVisualizer.mImageView.setClickable(true);
     }

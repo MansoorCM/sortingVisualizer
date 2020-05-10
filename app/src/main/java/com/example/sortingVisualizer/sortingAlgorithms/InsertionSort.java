@@ -4,29 +4,20 @@ import android.os.AsyncTask;
 
 import com.example.sortingVisualizer.sortingVisualizer;
 
-public class InsertionSort extends AsyncTask<Void,Void,Void> {
-
+public class InsertionSort extends AsyncTask<Void, Void, Void> {
 
 
     @Override
     protected Void doInBackground(Void... voids) {
-        final int n = sortingVisualizer.data.size();
-        for (int i = 1; i < n; ++i) {
-            int key = sortingVisualizer.data.get(i);
-            int j = i - 1;
-            try {
-                Thread.sleep(sortingVisualizer.speed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        int size = sortingVisualizer.data.size();
+        for (int firstIdx = 1; firstIdx < size; ++firstIdx) {
+            int key = sortingVisualizer.data.get(firstIdx);
+            int secondIdx = firstIdx - 1;
 
-            /* Move elements of arr[0..i-1], that are
-               greater than key, to one position ahead
-               of their current position */
-            while (j >= 0 && sortingVisualizer.data.get(j) > key) {
+            while (secondIdx >= 0 && sortingVisualizer.data.get(secondIdx) > key) {
 
-                sortingVisualizer.data.set(j + 1, sortingVisualizer.data.get(j));
-                j = j - 1;
+                sortingVisualizer.data.set(secondIdx + 1, sortingVisualizer.data.get(secondIdx));
+                secondIdx = secondIdx - 1;
                 publishProgress();
                 try {
                     Thread.sleep(sortingVisualizer.speed);
@@ -34,7 +25,7 @@ public class InsertionSort extends AsyncTask<Void,Void,Void> {
                     e.printStackTrace();
                 }
             }
-            sortingVisualizer.data.set(j + 1, key);
+            sortingVisualizer.data.set(secondIdx + 1, key);
         }
         return null;
     }
@@ -48,7 +39,7 @@ public class InsertionSort extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        sortingVisualizer.sorted=true;
+        sortingVisualizer.sorted = true;
         sortingVisualizer.drawSomething(sortingVisualizer.mImageView);
         sortingVisualizer.mImageView.setClickable(true);
     }

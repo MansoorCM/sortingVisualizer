@@ -6,22 +6,27 @@ import com.example.sortingVisualizer.sortingVisualizer;
 
 import java.util.ArrayList;
 
-public class HeapSort extends AsyncTask<Void,Void,Void> {
+public class HeapSort extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
-        int n = sortingVisualizer.data.size();
+        int size = sortingVisualizer.data.size();
 
-        // Build heap (rearrange array)
-        for (int i = n / 2 - 1; i >= 0; i--)
-            heapify(sortingVisualizer.data, n, i);
+        // Build heap
+        for (int idx = size / 2 - 1; idx >= 0; idx--) {
+            heapify(sortingVisualizer.data, size, idx);
+            publishProgress();
+            try {
+                Thread.sleep(sortingVisualizer.speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        // One by one extract an element from heap
-        for (int i=n-1; i>0; i--)
-        {
-            // Move current root to end
+
+        for (int idx = size - 1; idx > 0; idx--) {
             int temp = sortingVisualizer.data.get(0);
-            sortingVisualizer.data.set(0, sortingVisualizer.data.get(i));
-            sortingVisualizer.data.set(i, temp);
+            sortingVisualizer.data.set(0, sortingVisualizer.data.get(idx));
+            sortingVisualizer.data.set(idx, temp);
             publishProgress();
             try {
                 Thread.sleep(sortingVisualizer.speed);
@@ -29,35 +34,29 @@ public class HeapSort extends AsyncTask<Void,Void,Void> {
                 e.printStackTrace();
             }
 
-            // call max heapify on the reduced heap
-            heapify(sortingVisualizer.data, i, 0);
+            heapify(sortingVisualizer.data, idx, 0);
         }
         return null;
     }
 
-    void heapify(ArrayList<Integer> arr, int n, int i)
-    {
-        int largest = i; // Initialize largest as root
-        int l = 2*i + 1; // left = 2*i + 1
-        int r = 2*i + 2; // right = 2*i + 2
+    //max heap
+    private void heapify(ArrayList<Integer> myArray, int heapSize, int idx) {
+        int largest = idx;
+        int left = 2 * idx + 1;
+        int right = 2 * idx + 2;
 
-        // If left child is larger than root
-        if (l < n && arr.get(l) > arr.get(largest))
-            largest = l;
+        if (left < heapSize && myArray.get(left) > myArray.get(largest))
+            largest = left;
 
-        // If right child is larger than largest so far
-        if (r < n && arr.get(r) > arr.get(largest))
-            largest = r;
+        if (right < heapSize && myArray.get(right) > myArray.get(largest))
+            largest = right;
 
-        // If largest is not root
-        if (largest != i)
-        {
-            int swap = arr.get(i);
-            arr.set(i, arr.get(largest));
-            arr.set(largest, swap);
+        if (largest != idx) {
+            int swap = myArray.get(idx);
+            myArray.set(idx, myArray.get(largest));
+            myArray.set(largest, swap);
 
-            // Recursively heapify the affected sub-tree
-            heapify(arr, n, largest);
+            heapify(myArray, heapSize, largest);
         }
     }
 
@@ -70,7 +69,7 @@ public class HeapSort extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        sortingVisualizer.sorted=true;
+        sortingVisualizer.sorted = true;
         sortingVisualizer.drawSomething(sortingVisualizer.mImageView);
         sortingVisualizer.mImageView.setClickable(true);
     }

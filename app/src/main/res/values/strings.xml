@@ -1,15 +1,12 @@
 <resources>
     <string name="app_name">sortingVisualizer</string>
-    <string name="sort">sort</string>
 
-    <string name="keep_tapping">Keep tapping.</string>
-    <string name="done">Done!</string>
-    <string name="click_to_draw_the_array">click to draw the array.
+    <string name="click_to_draw_the_array">click here to draw the array.
         \nselect settings on top right to change the algorithm and array size</string>
-    <string name="bubble_sort">Bubble Sort</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings">Settings</string>
+    <string name="select_algorithm">click to select the algorithm</string>
+    <string name="click">click to Sort</string>
 
     <string-array name="Algorithm">
         <item>Bubble Sort</item>
@@ -27,12 +24,5 @@
         <item>"Quick Sort"</item>
         <item>"Heap Sort"</item>
         <item>"Merge Sort"</item>
-    </string-array>
-    <string-array name="languageAlias">
-        <item>"en-US"</item>
-        <item>"en-GB"</item>
-        <item>"fr-FR"</item>
-        <item>"es-ES"</item>
-        <item>"it-IT"</item>
     </string-array>
 </resources>

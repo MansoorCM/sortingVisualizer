@@ -6,49 +6,38 @@ import com.example.sortingVisualizer.sortingVisualizer;
 
 import java.util.ArrayList;
 
-public class MergeSort extends AsyncTask<Void,Void,Void> {
+public class MergeSort extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
-        sort(sortingVisualizer.data,0,sortingVisualizer.data.size()-1);
+        sort(sortingVisualizer.data, 0, sortingVisualizer.data.size() - 1);
         return null;
     }
-    void merge(ArrayList<Integer> arr, int l, int m, int r)
-    {
-        // Find sizes of two subarrays to be merged
-        int n1 = m - l + 1;
-        int n2 = r - m;
 
-        /* Create temp arrays */
-        int L[] = new int [n1];
-        int R[] = new int [n2];
+    void merge(ArrayList<Integer> myArray, int left, int middle, int right) {
+        int sizeOne = middle - left + 1;
+        int sizeTwo = right - middle;
 
-        /*Copy data to temp arrays*/
-        for (int i=0; i<n1; ++i)
-            L[i] = arr.get(l + i);
-        for (int j=0; j<n2; ++j)
-            R[j] = arr.get(m + 1 + j);
+        int[] LeftArray = new int[sizeOne];
+        int[] RightArray = new int[sizeTwo];
+
+        for (int i = 0; i < sizeOne; ++i)
+            LeftArray[i] = myArray.get(left + i);
+        for (int j = 0; j < sizeTwo; ++j)
+            RightArray[j] = myArray.get(middle + 1 + j);
 
 
-        /* Merge the temp arrays */
+        int firstIdx = 0, secondIdx = 0;
 
-        // Initial indexes of first and second subarrays
-        int i = 0, j = 0;
-
-        // Initial index of merged subarry array
-        int k = l;
-        while (i < n1 && j < n2)
-        {
-            if (L[i] <= R[j])
-            {
-                arr.set(k, L[i]);
-                i++;
+        int mergedArrayIdx = left;
+        while (firstIdx < sizeOne && secondIdx < sizeTwo) {
+            if (LeftArray[firstIdx] <= RightArray[secondIdx]) {
+                myArray.set(mergedArrayIdx, LeftArray[firstIdx]);
+                firstIdx++;
+            } else {
+                myArray.set(mergedArrayIdx, RightArray[secondIdx]);
+                secondIdx++;
             }
-            else
-            {
-                arr.set(k, R[j]);
-                j++;
-            }
-            k++;
+            mergedArrayIdx++;
             publishProgress();
             try {
                 Thread.sleep(sortingVisualizer.speed);
@@ -57,44 +46,39 @@ public class MergeSort extends AsyncTask<Void,Void,Void> {
             }
         }
 
-        /* Copy remaining elements of L[] if any */
-        while (i < n1)
-        {
-            arr.set(k, L[i]);
-            i++;
-            k++;
+        while (firstIdx < sizeOne) {
+            myArray.set(mergedArrayIdx, LeftArray[firstIdx]);
+            firstIdx++;
+            mergedArrayIdx++;
+            publishProgress();
+            try {
+                Thread.sleep(sortingVisualizer.speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        /* Copy remaining elements of R[] if any */
-        while (j < n2)
-        {
-            arr.set(k, R[j]);
-            j++;
-            k++;
-        }
-        publishProgress();
-        try {
-            Thread.sleep(sortingVisualizer.speed);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (secondIdx < sizeTwo) {
+            myArray.set(mergedArrayIdx, RightArray[secondIdx]);
+            secondIdx++;
+            mergedArrayIdx++;
+            publishProgress();
+            try {
+                Thread.sleep(sortingVisualizer.speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    // Main function that sorts arr[l..r] using
-    // merge()
-    void sort(ArrayList<Integer> arr, int l, int r)
-    {
-        if (l < r)
-        {
-            // Find the middle point
-            int m = (l+r)/2;
+    private void sort(ArrayList<Integer> myArray, int left, int right) {
+        if (left < right) {
+            int middle = (left + right) / 2;
 
-            // Sort first and second halves
-            sort(arr, l, m);
-            sort(arr , m+1, r);
+            sort(myArray, left, middle);
+            sort(myArray, middle + 1, right);
 
-            // Merge the sorted halves
-            merge(arr, l, m, r);
+            merge(myArray, left, middle, right);
         }
     }
 
@@ -107,7 +91,7 @@ public class MergeSort extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        sortingVisualizer.sorted=true;
+        sortingVisualizer.sorted = true;
         sortingVisualizer.drawSomething(sortingVisualizer.mImageView);
         sortingVisualizer.mImageView.setClickable(true);
     }

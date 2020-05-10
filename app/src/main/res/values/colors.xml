@@ -4,13 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="special">#78c257</color>
-    <color name="colorTextPrimary">@android:color/white</color>
-    <color name="colorPrimaryLight">#64b5f6</color>
     <color name="violet">#9209e4</color>
-    <color name="light_grey">#F3F3F3</color>
 
-    <color name="colorRectangle">#455A64</color>
-    <color name="colorBackground">#FFFFD600</color>
 
     <color name="lightGreen">#A5D6A7</color>
     <color name="primaryGreen">#43A047</color>

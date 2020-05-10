@@ -6,6 +6,7 @@
         android:title="Algorithm"
         android:entries="@array/Algorithm"
         android:entryValues="@array/AlgorithmValues"
+        android:summary="@string/select_algorithm"
         />
     <SwitchPreferenceCompat
         android:defaultValue="true"
@@ -17,5 +18,6 @@
         android:title="Array size"
         android:key="array_size"
         app:min="5"
+        android:defaultValue="60"
         android:max="60"/>
 </PreferenceScreen>
