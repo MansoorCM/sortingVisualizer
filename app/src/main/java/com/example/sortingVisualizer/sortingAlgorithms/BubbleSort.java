@@ -14,11 +14,11 @@ public class BubbleSort extends AsyncTask<Void, Void, Void> {
 
             for (int secondIdx = 0; secondIdx < size - firstIdx - 1; secondIdx++) {
 
-                try {
-                    Thread.sleep(sortingVisualizer.speed/10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(sortingVisualizer.speed/10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 if (sortingVisualizer.data.get(secondIdx) > sortingVisualizer.data.get(secondIdx + 1)) {
 
                     int temp = sortingVisualizer.data.get(secondIdx);

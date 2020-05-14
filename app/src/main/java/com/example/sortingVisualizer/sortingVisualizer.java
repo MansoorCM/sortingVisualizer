@@ -4,7 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +38,7 @@ import com.example.sortingVisualizer.sortingAlgorithms.QuickSort;
 import com.example.sortingVisualizer.sortingAlgorithms.SelectionSort;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -64,6 +70,7 @@ public class sortingVisualizer extends AppCompatActivity {
     public static boolean sorted = false;
     private static String algorithm;
     private AsyncTask task;
+    static SharedPreferences preferences;
 
 
     @Override
@@ -113,13 +120,8 @@ public class sortingVisualizer extends AppCompatActivity {
 
         //get the values from the settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean vis_mode = preferences.getBoolean(SettingsActivity.KEY_SPEED, false);
-        if (vis_mode) {
-            speed = 40;
-        } else {
-            speed = 100;
-        }
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        setSpeed();
         algorithm = preferences.getString(SettingsActivity.KEY_ALGO, "Heap Sort");
         mTextViewAlgorithm.setText(algorithm);
         size = preferences.getInt(SettingsActivity.KEY_SIZE, 60);
@@ -131,6 +133,16 @@ public class sortingVisualizer extends AppCompatActivity {
             initializeArray();
         }
 
+    }
+
+    static void setSpeed()
+    {
+        boolean vis_mode = preferences.getBoolean(SettingsActivity.KEY_SPEED, false);
+        if (vis_mode) {
+            speed = 40;
+        } else {
+            speed = 100;
+        }
     }
 
     private static void initializeArray() {
@@ -181,6 +193,8 @@ public class sortingVisualizer extends AppCompatActivity {
         // Invalidate the view, so that it gets redrawn.
         view.invalidate();
         if (sorted) {
+            setSpeed();
+            mButton.setText(R.string.click);
             sorted = false;
         }
     }
@@ -208,31 +222,40 @@ public class sortingVisualizer extends AppCompatActivity {
 
 
     public void sort(View view) {
-//        Log.d("TAG", "speed:"+String.valueOf(speed));
+        if(mButton.getText().toString().equals(getString(R.string.show_final)))
+        {
+            speed=0;
+            mButton.setVisibility(View.INVISIBLE);
+        }else
+        {
+            //        Log.d("TAG", "speed:"+String.valueOf(speed));
 //        Log.d("TAG", "algorithm:"+algorithm);
 //        Log.d("TAG", "size:"+size);
-        mImageView.setClickable(false);
-        mButton.setVisibility(View.INVISIBLE);
-        switch (algorithm) {
-            case "Insertion Sort":
-                task=new InsertionSort().execute();
-                break;
-            case "Selection Sort":
-                task=new SelectionSort().execute();
-                break;
-            case "Bubble Sort":
-                task=new BubbleSort().execute();
-                break;
-            case "Quick Sort":
-                task=new QuickSort().execute();
-                break;
-            case "Heap Sort":
-                task=new HeapSort().execute();
-                break;
-            case "Merge Sort":
-                task=new MergeSort().execute();
-                break;
+            mImageView.setClickable(false);
+            //mButton.setVisibility(View.INVISIBLE);
+            mButton.setText(R.string.show_final);
+            switch (algorithm) {
+                case "Insertion Sort":
+                    task=new InsertionSort().execute();
+                    break;
+                case "Selection Sort":
+                    task=new SelectionSort().execute();
+                    break;
+                case "Bubble Sort":
+                    task=new BubbleSort().execute();
+                    break;
+                case "Quick Sort":
+                    task=new QuickSort().execute();
+                    break;
+                case "Heap Sort":
+                    task=new HeapSort().execute();
+                    break;
+                case "Merge Sort":
+                    task=new MergeSort().execute();
+                    break;
+            }
         }
+
 
     }
 
