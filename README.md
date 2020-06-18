@@ -8,9 +8,11 @@ The main screen shows different arrays as shown in the list screen on touching t
 ## List screen
 <img src="list.jpg" width=150>
 
+
 ## Sorted list
 <img src="sorted.jpg" width=150>
-the sorted list is in violet color to indicate that the sorting is complete. 
+A delay is added in to the sorting algorithm to show the animation.
+ the sorted list is in violet color to indicate that the sorting is complete. 
 
 ## Settings page
 <img src="settings.jpg" width=150>
