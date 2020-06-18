@@ -1,5 +1,6 @@
 # sortingVisualizer
-Visualize Bubble Sort,Insertion Sort,SelectionSort,Quick Sort,Merge Sort and Heap Sort
+Visualize Bubble Sort,Insertion Sort,SelectionSort,Quick Sort,Merge Sort and Heap Sort. 
+[Click](https://github.com/MansoorCM/sortingVisualizer/blob/master/sortingVisualizer.apk) here to download the apk file
 
 ## Main screen
 <img src="main.jpg" width=150>
