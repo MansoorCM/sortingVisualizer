@@ -1,6 +1,22 @@
 # sortingVisualizer
 Visualize Bubble Sort,Insertion Sort,SelectionSort,Quick Sort,Merge Sort and Heap Sort
 
-[main screen](https://github.com/MansoorCM/sortingVisualizer/blob/master/main.jpg) shows different [lists](https://github.com/MansoorCM/sortingVisualizer/blob/master/list.jpg) on touching the screen and it can be sorted using the sort button.
-the [sorted list](https://github.com/MansoorCM/sortingVisualizer/blob/master/sorted.jpg) is in violet color to indicate that the sorting is complete. 
-the [settings page](https://github.com/MansoorCM/sortingVisualizer/blob/master/settings.jpg) allows the user to change the speed,array size and the sorting algorithm(among the six mentioned previously).click [here](https://github.com/MansoorCM/sortingVisualizer/blob/master/algorithm.jpg) to see the screen to change algorithm 
+## Main screen
+<img src="main.jpg" width=150>
+The main screen shows different arrays as shown in the list screen on touching the screen(click again to generate a different array) and it can be sorted using the sort button.
+
+## List screen
+<img src="list.jpg" width=150>
+
+## Sorted list
+<img src="sorted.jpg" width=150>
+the sorted list is in violet color to indicate that the sorting is complete. 
+
+## Settings page
+<img src="settings.jpg" width=150>
+the settings page allows the user to change the speed,array size and the sorting algorithm 
+(among the six mentioned previously).
+
+## Change algorithm
+<img src="algorithm.jpg" width=150>
+The screen to change algorithm.
